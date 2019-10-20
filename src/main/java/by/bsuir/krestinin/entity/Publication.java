@@ -1,4 +1,4 @@
-package by.bsuir.krestinin.model;
+package by.bsuir.krestinin.entity;
 
 import java.util.Date;
 import java.util.List;

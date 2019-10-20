@@ -1,4 +1,4 @@
-package by.bsuir.krestinin.model;
+package by.bsuir.krestinin.entity;
 
 import java.io.Serializable;
 import java.util.Date;
