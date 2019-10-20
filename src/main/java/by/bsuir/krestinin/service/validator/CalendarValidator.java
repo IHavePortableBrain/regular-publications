@@ -2,7 +2,7 @@ package by.bsuir.krestinin.service.validator;
 
 import by.bsuir.krestinin.entity.Calendar;
 
-public final class CalendarValidator extends PublicationValidator{
+public final class CalendarValidator extends PublicationValidator {
     private static final int MIN_CALENDAR_YEAR = 2018;
 
     private CalendarValidator() {

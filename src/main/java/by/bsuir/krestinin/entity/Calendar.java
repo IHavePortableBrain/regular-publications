@@ -1,23 +1,30 @@
 package by.bsuir.krestinin.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@Entity
+@Table(name = "calendar")
 public class Calendar extends Publication implements Serializable {
     private static final long serialVersionUID = -2995839918904085318L;
 
+    @Column(name = "year")
     private int year;
+
+    @Column(name = "description")
     private String description;
 
     public Calendar() {
         super();
     }
 
-    public Calendar(int id, String title, Date publicationDate, List<Author> authors, int year, String description) {
-        super(id, title, publicationDate, authors);
+    public Calendar(int id, String title, Date publicationDate, int year, String description) {
+        super(id, title, publicationDate);
         this.year = year;
         this.description = description;
     }
@@ -63,6 +70,7 @@ public class Calendar extends Publication implements Serializable {
         return new StringJoiner(", ", Calendar.class.getSimpleName() + "[", "]")
                 .add("year=" + year)
                 .add("description='" + description + "'")
+                .add(super.toString())
                 .toString();
     }
 }

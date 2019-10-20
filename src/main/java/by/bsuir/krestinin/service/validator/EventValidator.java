@@ -21,7 +21,7 @@ public final class EventValidator {
     }
 
     public static boolean isValidId(int id) {
-        return id > MIN_EVENT_ID;
+        return id >= MIN_EVENT_ID;
     }
 
     public static boolean isValidAmountOfPeopleActed(int amountOfPeopleActed) {

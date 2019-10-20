@@ -2,8 +2,8 @@ package by.bsuir.krestinin.service.validator;
 
 import by.bsuir.krestinin.entity.Journal;
 
-public final class JournalValidator extends PublicationValidator{
-    private JournalValidator(){
+public final class JournalValidator extends PublicationValidator {
+    private JournalValidator() {
     }
 
     public static boolean isValidJournal(Journal journal) {

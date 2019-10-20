@@ -5,6 +5,7 @@ import by.bsuir.krestinin.entity.Catalog;
 public final class CatalogValidator extends PublicationValidator {
 
     private static final int MIN_PRICE = 0;
+    private static final int MIN_AMOUNT_OF_ITEMS = 0;
 
     private CatalogValidator() {
     }
@@ -17,7 +18,7 @@ public final class CatalogValidator extends PublicationValidator {
     }
 
     public static boolean isValidAmountOfItems(int amountOfItems) {
-        return amountOfItems >= 0;
+        return amountOfItems >= MIN_AMOUNT_OF_ITEMS;
     }
 
     public static boolean isValidPrice(double price) {

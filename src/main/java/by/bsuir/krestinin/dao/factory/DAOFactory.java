@@ -6,12 +6,12 @@ import by.bsuir.krestinin.dao.impl.*;
 public final class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
 
-    private final AuthorDAO authorDAO = new AuthorXmlDAO();
-    private final CalendarDAO calendarDAO = new CalendarXmlDAO();
-    private final CatalogDAO catalogDAO = new CatalogXmlDAO();
-    private final EventDAO eventDAO = new EventXmlDAO();
-    private final JournalDAO journalDAO = new JournalXmlDAO();
-    private final NewspaperDAO newspaperDAO = new NewspaperXmlDAO();
+    private final AuthorDAO authorDAO = new AuthorMysqlDAO();
+    private final CalendarDAO calendarDAO = new CalendarMysqlDAO();
+    private final CatalogDAO catalogDAO = new CatalogMysqlDAO();
+    private final EventDAO eventDAO = new EventMysqlDAO();
+    private final JournalDAO journalDAO = new JournalMysqlDAO();
+    private final NewspaperDAO newspaperDAO = new NewspaperMysqlDAO();
 
     private DAOFactory() {
     }

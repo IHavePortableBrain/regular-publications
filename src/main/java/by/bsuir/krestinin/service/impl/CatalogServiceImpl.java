@@ -13,7 +13,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public void create(Catalog catalog) throws ServiceException {
-        if(!CatalogValidator.isValidCatalog(catalog)) {
+        if (!CatalogValidator.isValidCatalog(catalog)) {
             throw new ServiceException("Invalid catalog: " + catalog);
         }
 
@@ -26,7 +26,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public Catalog read(int catalogId) throws ServiceException {
-        if(!CatalogValidator.isValidId(catalogId)) {
+        if (!CatalogValidator.isValidId(catalogId)) {
             throw new ServiceException("Invalid catalog id: " + catalogId);
         }
 
@@ -43,7 +43,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public void update(Catalog catalog) throws ServiceException {
-        if(!CatalogValidator.isValidCatalog(catalog)) {
+        if (!CatalogValidator.isValidCatalog(catalog)) {
             throw new ServiceException("Invalid catalog: " + catalog);
         }
 
@@ -56,7 +56,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public void delete(int catalogId) throws ServiceException {
-        if(!CatalogValidator.isValidId(catalogId)) {
+        if (!CatalogValidator.isValidId(catalogId)) {
             throw new ServiceException("Invalid catalog id: " + catalogId);
         }
 

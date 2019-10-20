@@ -5,7 +5,7 @@ import by.bsuir.krestinin.entity.Author;
 public final class AuthorValidator {
     private static final int MIN_AUTHOR_ID = 0;
 
-    private AuthorValidator(){
+    private AuthorValidator() {
     }
 
     public static boolean isValidAuthor(Author author) {
@@ -17,7 +17,7 @@ public final class AuthorValidator {
     }
 
     public static boolean isValidId(int id) {
-        return id > MIN_AUTHOR_ID;
+        return id >= MIN_AUTHOR_ID;
     }
 
     public static boolean isValidFullName(String fullName) {

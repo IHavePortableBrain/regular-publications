@@ -1,24 +1,34 @@
 package by.bsuir.krestinin.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@Entity
+@Table(name = "catalog")
 public class Catalog extends Publication implements Serializable {
     private static final long serialVersionUID = -6931097108288203519L;
 
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "amount_of_items")
     private int amountOfItems;
+
+    @Column(name = "short_description")
     private String shortDescription;
 
     public Catalog() {
         super();
     }
 
-    public Catalog(int id, String title, Date publicationDate, List<Author> authors, double price, int amountOfItems, String shortDescription) {
-        super(id, title, publicationDate, authors);
+    public Catalog(int id, String title, Date publicationDate,
+                   double price, int amountOfItems, String shortDescription) {
+        super(id, title, publicationDate);
 
         this.price = price;
         this.amountOfItems = amountOfItems;
@@ -76,6 +86,7 @@ public class Catalog extends Publication implements Serializable {
                 .add("price=" + price)
                 .add("amountOfItems=" + amountOfItems)
                 .add("shortDescription='" + shortDescription + "'")
+                .add(super.toString())
                 .toString();
     }
 }

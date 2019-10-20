@@ -1,12 +1,31 @@
 package by.bsuir.krestinin;
 
-import by.bsuir.krestinin.dao.util.DAOFileUtils;
-
-import java.io.IOException;
+import by.bsuir.krestinin.entity.Calendar;
+import by.bsuir.krestinin.service.api.CalendarService;
+import by.bsuir.krestinin.service.exception.ServiceException;
+import by.bsuir.krestinin.service.factory.ServiceFactory;
 
 public class Application {
-    public static void main(String[] args) throws IOException {
-        DAOFileUtils.writeStringToFile("text", "applicationa.properties");
-        System.out.println(DAOFileUtils.readFile("applicationa.properties"));
+    public static void main(String[] args) throws ServiceException {
+        demonstrateWork();
+    }
+
+    private static void demonstrateWork() throws ServiceException {
+        CalendarService calendarService = ServiceFactory.getInstance().getCalendarService();
+        Calendar calendar = new Calendar();
+        calendar.setTitle("Title");
+        calendar.setPublicationDate(java.util.Calendar.getInstance().getTime());
+        calendar.setYear(2019);
+        calendar.setDescription("desc");
+
+        calendarService.create(calendar);
+
+        calendar.setDescription("new desc");
+
+        calendarService.update(calendar);
+
+        System.out.println(calendarService.read(calendar.getId()));
+
+        calendarService.delete(calendar.getId());
     }
 }

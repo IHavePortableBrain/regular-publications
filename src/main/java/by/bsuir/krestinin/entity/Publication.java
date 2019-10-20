@@ -1,24 +1,31 @@
 package by.bsuir.krestinin.entity;
 
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@MappedSuperclass
 public abstract class Publication {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "publication_date")
     private Date publicationDate;
-    private List<Author> authors;
 
     public Publication() {
     }
 
-    public Publication(int id, String title, Date publicationDate, List<Author> authors) {
+    public Publication(int id, String title, Date publicationDate) {
         this.id = id;
         this.title = title;
         this.publicationDate = publicationDate;
-        this.authors = authors;
     }
 
     public int getId() {
@@ -45,14 +52,6 @@ public abstract class Publication {
         this.publicationDate = publicationDate;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,13 +60,12 @@ public abstract class Publication {
         Publication that = (Publication) o;
         return getId() == that.getId() &&
                 getTitle().equals(that.getTitle()) &&
-                getPublicationDate().equals(that.getPublicationDate()) &&
-                getAuthors().equals(that.getAuthors());
+                getPublicationDate().equals(that.getPublicationDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getPublicationDate(), getAuthors());
+        return Objects.hash(getId(), getTitle(), getPublicationDate());
     }
 
     @Override
@@ -76,7 +74,6 @@ public abstract class Publication {
                 .add("id=" + id)
                 .add("title='" + title + "'")
                 .add("publicationDate=" + publicationDate)
-                .add("authors=" + authors)
                 .toString();
     }
 }
