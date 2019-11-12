@@ -5,7 +5,7 @@ import by.bsuir.krestinin.entity.Newspaper;
 
 import java.util.List;
 
-public interface NewspaperDAO {
+public interface NewspaperDAO extends CRUD<Newspaper> {
     void create(Newspaper newspaper) throws DAOException;
 
     Newspaper read(int newspaperId) throws DAOException;

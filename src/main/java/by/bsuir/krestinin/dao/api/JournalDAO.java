@@ -3,7 +3,7 @@ package by.bsuir.krestinin.dao.api;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Journal;
 
-public interface JournalDAO {
+public interface JournalDAO extends CRUD<Journal> {
     void create(Journal journal) throws DAOException;
 
     Journal read(int journalId) throws DAOException;

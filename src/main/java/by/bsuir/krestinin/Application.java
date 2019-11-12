@@ -1,12 +1,16 @@
 package by.bsuir.krestinin;
 
+import by.bsuir.krestinin.entity.Author;
 import by.bsuir.krestinin.entity.Calendar;
-import by.bsuir.krestinin.entity.Newspaper;
+import by.bsuir.krestinin.entity.Journal;
+import by.bsuir.krestinin.entity.JournalType;
+import by.bsuir.krestinin.service.api.AuthorService;
 import by.bsuir.krestinin.service.api.CalendarService;
+import by.bsuir.krestinin.service.api.JournalService;
 import by.bsuir.krestinin.service.exception.ServiceException;
 import by.bsuir.krestinin.service.factory.ServiceFactory;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Application {
     public static void main(String[] args) throws ServiceException {
@@ -15,23 +19,44 @@ public class Application {
 
     private static void demonstrateWork() throws ServiceException {
         CalendarService calendarService = ServiceFactory.getInstance().getCalendarService();
-        Calendar calendar = new Calendar();
-        calendar.setTitle("Title");
-        calendar.setPublicationDate(java.util.Calendar.getInstance().getTime());
-        calendar.setYear(2019);
-        calendar.setDescription("desc");
+        AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
+        JournalService journalService = ServiceFactory.getInstance().getJournalService();
 
+        Calendar calendar = new Calendar(4, "title2",
+                java.util.Calendar.getInstance().getTime(), 2019, "desc");
+
+
+        Author author = new Author();
+        author.setId(3);
+        ArrayList<Integer> authors = new ArrayList<>();
+        authors.add(author.getId());
+
+        Journal journal = new Journal(5, "jTitile", java.util.Calendar.getInstance().getTime(),
+                authors, JournalType.EVERY_WEEK);
+
+        ArrayList<Integer> journals = new ArrayList<>();
+        journals.add(journal.getId());
+
+        author.setPublicationDate(java.util.Calendar.getInstance().getTime());
+        author.setTitle("Abraham");
+        author.setBiography("bio");
+        author.setFullName("FullName");
+        author.setBirthPlace("Jaja");
+        author.setJournals(journals);
+
+        authorService.create(author);
         calendarService.create(calendar);
+        journalService.create(journal);
 
-        calendar.setDescription("new desc");
+        //calendar.setDescription("new desc");
 
-        calendarService.update(calendar);
+        //calendarService.update(calendar);
 
-        System.out.println(calendarService.read(calendar.getId()));
+        System.out.println(authorService.read(author.getId()));
 
-        calendarService.delete(calendar.getId());
+        //calendarService.delete(calendar.getId());
 
-        final List<Newspaper> newspapersByPagesRange = ServiceFactory.getInstance().getNewspaperService().findNewspapersByPagesRange(10, 15);
-        System.out.println(newspapersByPagesRange);
+        //final List<Newspaper> newspapersByPagesRange = ServiceFactory.getInstance().getNewspaperService().findNewspapersByPagesRange(10, 15);
+        //System.out.println(newspapersByPagesRange);
     }
 }

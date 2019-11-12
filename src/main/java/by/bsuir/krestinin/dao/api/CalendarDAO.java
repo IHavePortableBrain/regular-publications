@@ -3,7 +3,7 @@ package by.bsuir.krestinin.dao.api;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Calendar;
 
-public interface CalendarDAO {
+public interface CalendarDAO extends CRUD<Calendar> {
     void create(Calendar calendar) throws DAOException;
 
     Calendar read(int calendarId) throws DAOException;

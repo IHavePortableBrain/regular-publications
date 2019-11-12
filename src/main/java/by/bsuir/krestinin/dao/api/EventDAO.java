@@ -3,7 +3,7 @@ package by.bsuir.krestinin.dao.api;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Event;
 
-public interface EventDAO {
+public interface EventDAO extends CRUD<Event> {
     void create(Event event) throws DAOException;
 
     Event read(int eventId) throws DAOException;

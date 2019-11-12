@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 
 @Entity
 @Table(name = "event")
-public class Event implements Serializable {
+public class Event extends Publication implements Serializable {
     private static final long serialVersionUID = -7608861318703624780L;
 
     @Id
@@ -31,10 +31,13 @@ public class Event implements Serializable {
     private List<Newspaper> publishingPlaces;
 
     public Event() {
+        super();
     }
 
-    public Event(int id, Date dateHappened, String description, int amountOfPeopleActed, List<Newspaper> publishingPlaces) {
-        this.id = id;
+    public Event(int id, String title, Date publicationDate,
+                 Date dateHappened, String description, int amountOfPeopleActed,
+                 List<Newspaper> publishingPlaces) {
+        super(id, title, publicationDate);
         this.dateHappened = dateHappened;
         this.description = description;
         this.amountOfPeopleActed = amountOfPeopleActed;
@@ -67,14 +70,6 @@ public class Event implements Serializable {
 
     public void setAmountOfPeopleActed(int amountOfPeopleActed) {
         this.amountOfPeopleActed = amountOfPeopleActed;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public List<Newspaper> getPublishingPlaces() {

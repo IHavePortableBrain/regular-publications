@@ -3,7 +3,7 @@ package by.bsuir.krestinin.dao.api;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Catalog;
 
-public interface CatalogDAO {
+public interface CatalogDAO extends CRUD<Catalog> {
     void create(Catalog catalog) throws DAOException;
 
     Catalog read(int catalogId) throws DAOException;

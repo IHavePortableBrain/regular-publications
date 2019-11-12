@@ -1,12 +1,14 @@
 package by.bsuir.krestinin.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@XmlRootElement(name = "publication")
 @MappedSuperclass
-public abstract class Publication {
+public class Publication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

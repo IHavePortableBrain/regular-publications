@@ -14,7 +14,7 @@ public class Journal extends Publication implements Serializable {
 
     @ManyToMany(mappedBy = "journals")
     @Column(name = "authors")
-    private List<Author> authors;
+    private List<Integer> authors;//List<Author>
 
     @Column(name = "journal_type")
     @Enumerated(EnumType.STRING)
@@ -24,9 +24,9 @@ public class Journal extends Publication implements Serializable {
         super();
     }
 
-    public Journal(int id, String title, Date publicationDate, List<Author> authors1, JournalType journalType) {
+    public Journal(int id, String title, Date publicationDate, List<Integer> authors, JournalType journalType) {
         super(id, title, publicationDate);
-        this.authors = authors1;
+        this.authors = authors;
         this.journalType = journalType;
     }
 
@@ -42,11 +42,11 @@ public class Journal extends Publication implements Serializable {
         this.journalType = journalType;
     }
 
-    public List<Author> getAuthors() {
+    public List<Integer> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(List<Integer> authors) {
         this.authors = authors;
     }
 

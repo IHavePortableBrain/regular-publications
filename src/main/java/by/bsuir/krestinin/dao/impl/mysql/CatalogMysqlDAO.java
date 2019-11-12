@@ -1,4 +1,4 @@
-package by.bsuir.krestinin.dao.impl;
+package by.bsuir.krestinin.dao.impl.mysql;
 
 import by.bsuir.krestinin.dao.api.CatalogDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;

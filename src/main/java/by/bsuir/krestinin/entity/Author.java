@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+//TODO: author is not publication
 @Entity
 @Table(name = "author")
-public class Author implements Serializable {
+public class Author extends Publication implements Serializable {
     private static final long serialVersionUID = 1659074767148864864L;
 
     @Id
@@ -31,12 +32,12 @@ public class Author implements Serializable {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "journal_id"))
     @Column(name = "journals")
-    private List<Journal> journals;
+    private List<Integer> journals;//List<Journal>
 
     public Author() {
     }
 
-    public Author(int id, String fullName, String birthPlace, String biography, List<Journal> journals) {
+    public Author(int id, String fullName, String birthPlace, String biography, List<Integer> journals) {
         this.id = id;
         this.fullName = fullName;
         this.birthPlace = birthPlace;
@@ -80,11 +81,11 @@ public class Author implements Serializable {
         this.biography = biography;
     }
 
-    public List<Journal> getJournals() {
+    public List<Integer> getJournals() {
         return journals;
     }
 
-    public void setJournals(List<Journal> journals) {
+    public void setJournals(List<Integer> journals) {
         this.journals = journals;
     }
 

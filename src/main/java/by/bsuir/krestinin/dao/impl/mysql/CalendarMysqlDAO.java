@@ -1,22 +1,22 @@
-package by.bsuir.krestinin.dao.impl;
+package by.bsuir.krestinin.dao.impl.mysql;
 
-import by.bsuir.krestinin.dao.api.JournalDAO;
+import by.bsuir.krestinin.dao.api.CalendarDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;
-import by.bsuir.krestinin.entity.Journal;
+import by.bsuir.krestinin.entity.Calendar;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
-public class JournalMysqlDAO implements JournalDAO {
+public class CalendarMysqlDAO implements CalendarDAO {
     @Override
-    public void create(Journal journal) throws DAOException {
+    public void create(Calendar calendar) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            session.save(journal);
+            session.save(calendar);
 
             transaction.commit();
 
@@ -31,15 +31,15 @@ public class JournalMysqlDAO implements JournalDAO {
     }
 
     @Override
-    public Journal read(int journalId) throws DAOException {
+    public Calendar read(int calendarId) throws DAOException {
         Transaction transaction = null;
 
-        Journal result;
+        Calendar result;
 
         try (Session session = getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            result = session.get(Journal.class, journalId);
+            result = session.get(Calendar.class, calendarId);
 
             transaction.commit();
 
@@ -56,17 +56,17 @@ public class JournalMysqlDAO implements JournalDAO {
     }
 
     @Override
-    public void update(Journal journal) throws DAOException {
+    public void update(Calendar calendar) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            Journal result = session.get(Journal.class, journal.getId());
-            result.setAuthors(journal.getAuthors());
-            result.setJournalType(journal.getJournalType());
-            result.setPublicationDate(journal.getPublicationDate());
-            result.setTitle(journal.getTitle());
+            Calendar result = session.get(Calendar.class, calendar.getId());
+            result.setDescription(calendar.getDescription());
+            result.setYear(calendar.getYear());
+            result.setPublicationDate(calendar.getPublicationDate());
+            result.setTitle(calendar.getTitle());
 
             transaction.commit();
 
@@ -81,13 +81,13 @@ public class JournalMysqlDAO implements JournalDAO {
     }
 
     @Override
-    public void delete(int journalId) throws DAOException {
+    public void delete(int calendarId) throws DAOException {
 
         Transaction transaction = null;
         try (Session session = getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            Journal result = session.get(Journal.class, journalId);
+            Calendar result = session.get(Calendar.class, calendarId);
             session.delete(result);
 
             transaction.commit();

@@ -8,6 +8,7 @@ import by.bsuir.krestinin.service.api.JournalService;
 import by.bsuir.krestinin.service.exception.ServiceException;
 import by.bsuir.krestinin.service.validator.JournalValidator;
 
+//TODO: rewrite services like Dao layer
 public class JournalServiceImpl implements JournalService {
     private static final JournalDAO journalDAO = DAOFactory.getInstance().getJournalDAO();
 
