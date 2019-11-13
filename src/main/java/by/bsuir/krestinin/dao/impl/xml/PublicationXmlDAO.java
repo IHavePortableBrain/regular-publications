@@ -1,6 +1,6 @@
 package by.bsuir.krestinin.dao.impl.xml;
 
-import by.bsuir.krestinin.dao.api.CRUD;
+import by.bsuir.krestinin.dao.api.PublicationDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Publication;
 
@@ -12,13 +12,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//TODO: write API for it
 @SuppressWarnings("unchecked")
-class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
+class PublicationXmlDAO implements PublicationDAO {
     private File xmlDB;
-    private final Class<T> type;
+    private final Class type;
     private JAXBContext jaxbContext;
 
-    PublicationXmlDAO(File xmlDB, Class<T> type) {
+    PublicationXmlDAO(File xmlDB, Class type) {
         this.xmlDB = xmlDB;
         this.type = type;
 
@@ -32,15 +33,15 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
 
     //TODO: creation id check, new file(DB table analog) for each entity
     @Override
-    public void create(T publication) throws DAOException {
+    public void create(Publication publication) throws DAOException {
         try {
-            Publications<T> publications = new Publications<>();
+            Publications publications = new Publications();
 
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
             if (xmlDB.length() != 0)
-                publications = (Publications<T>) jaxbUnmarshaller.unmarshal(xmlDB);
+                publications = (Publications) jaxbUnmarshaller.unmarshal(xmlDB);
 
             publications.AddPublication(publication);
 
@@ -53,15 +54,15 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
     }
 
     @Override
-    public T read(int id) throws DAOException {
-        T result = null;
+    public Publication read(int id) throws DAOException {
+        Publication result = null;
         try {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            Publications<T> DBcontent = (Publications<T>) jaxbUnmarshaller.unmarshal(xmlDB);
+            Publications DBcontent = (Publications) jaxbUnmarshaller.unmarshal(xmlDB);
             for (Publication publication : DBcontent.getPublications()
             ) {
                 if (publication.getId() == id) {
-                    result = (T) publication;
+                    result = publication;
                     break;
                 }
             }
@@ -72,17 +73,30 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
         return result;
     }
 
+    public Publication[] readAll() throws DAOException {
+        Publication[] result = (Publication[]) java.lang.reflect.Array.newInstance(type, 0);
+        try {
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            Publications DBcontent = (Publications) jaxbUnmarshaller.unmarshal(xmlDB);
+            result = DBcontent.getPublications().toArray(result);
+        } catch (JAXBException e) {
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
     @Override
-    public void update(T publication) throws DAOException {
+    public void update(Publication publication) throws DAOException {
         try {
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
             if (xmlDB.length() == 0)
                 return;
-            Publications<T> publications = (Publications<T>) jaxbUnmarshaller.unmarshal(xmlDB);
+            Publications publications = (Publications) jaxbUnmarshaller.unmarshal(xmlDB);
 
-            T[] old = (T[]) java.lang.reflect.Array.newInstance(type, 0);
+            Publication[] old = (Publication[]) java.lang.reflect.Array.newInstance(type, 0);
             old = publications.getPublications().toArray(old);
             for (int i = 0; i < old.length; i++) {
                 if (old[i].getId() == publication.getId()) {
@@ -91,7 +105,7 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
                 }
             }
 
-            publications.setPublications(new ArrayList<T>(Arrays.asList(old)));
+            publications.setPublications(new ArrayList(Arrays.asList(old)));
 
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
@@ -109,9 +123,9 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
 
             if (xmlDB.length() == 0)
                 return;
-            Publications<T> publications = (Publications<T>) jaxbUnmarshaller.unmarshal(xmlDB);
+            Publications publications = (Publications) jaxbUnmarshaller.unmarshal(xmlDB);
 
-            T[] old = (T[]) java.lang.reflect.Array.newInstance(type, 0);
+            Publication[] old = (Publication[]) java.lang.reflect.Array.newInstance(type, 0);
             old = publications.getPublications().toArray(old);
             for (int i = 0; i < old.length; i++) {
                 if (old[i].getId() == id) {
@@ -120,7 +134,7 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
                 }
             }
 
-            publications.setPublications(new ArrayList<T>(Arrays.asList(old)));
+            publications.setPublications(new ArrayList(Arrays.asList(old)));
 
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
@@ -131,7 +145,7 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
     }
 
     //TODO: derive into array extension
-    private T[] removeTheElement(T[] arr, int index) {
+    private Publication[] removeTheElement(Publication[] arr, int index) {
         if (arr == null
                 || index < 0
                 || index >= arr.length) {
@@ -139,7 +153,7 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
             return arr;
         }
 
-        T[] anotherArray = (T[]) java.lang.reflect.Array.newInstance(type, arr.length - 1);
+        Publication[] anotherArray = (Publication[]) java.lang.reflect.Array.newInstance(type, arr.length - 1);
 
         for (int i = 0, k = 0; i < arr.length; i++) {
             if (i == index) {

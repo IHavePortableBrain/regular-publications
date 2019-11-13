@@ -5,20 +5,20 @@ import by.bsuir.krestinin.entity.Publication;
 public class PublicationValidator {
     private static final int MIN_PUBLICATION_ID = 0;
 
-    protected PublicationValidator() {
+    public PublicationValidator() {
     }
 
-    public static boolean isValidPublication(Publication publication) {
+    public boolean isValid(Publication publication) {
         return publication != null &&
                 isValidId(publication.getId()) &&
                 isValidTitle(publication.getTitle());
     }
 
-    public static boolean isValidId(int id) {
+    public boolean isValidId(int id) {
         return id >= MIN_PUBLICATION_ID;
     }
 
-    public static boolean isValidTitle(String title) {
+    private boolean isValidTitle(String title) {
         return title != null && !title.isEmpty();
     }
 }

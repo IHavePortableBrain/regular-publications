@@ -5,7 +5,7 @@ import by.bsuir.krestinin.entity.Author;
 
 import java.io.File;
 
-public class AuthorXmlDAO extends PublicationXmlDAO<Author> implements AuthorDAO {
+public class AuthorXmlDAO extends PublicationXmlDAO implements AuthorDAO {
     public AuthorXmlDAO(File xmlDB) {
         super(xmlDB, Author.class);
     }

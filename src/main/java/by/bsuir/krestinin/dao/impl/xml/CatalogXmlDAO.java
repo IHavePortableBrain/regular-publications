@@ -5,7 +5,7 @@ import by.bsuir.krestinin.entity.Catalog;
 
 import java.io.File;
 
-public class CatalogXmlDAO extends PublicationXmlDAO<Catalog> implements CatalogDAO {
+public class CatalogXmlDAO extends PublicationXmlDAO implements CatalogDAO {
     public CatalogXmlDAO(File xmlDB) {
         super(xmlDB, Catalog.class);
     }

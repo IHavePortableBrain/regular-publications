@@ -5,7 +5,7 @@ import by.bsuir.krestinin.entity.Event;
 
 import java.io.File;
 
-public class EventXmlDAO extends PublicationXmlDAO<Event> implements EventDAO {
+public class EventXmlDAO extends PublicationXmlDAO implements EventDAO {
     public EventXmlDAO(File xmlDB) {
         super(xmlDB, Event.class);
     }

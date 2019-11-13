@@ -49,14 +49,6 @@ public class Author extends Publication implements Serializable {
         return serialVersionUID;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFullName() {
         return fullName;
     }

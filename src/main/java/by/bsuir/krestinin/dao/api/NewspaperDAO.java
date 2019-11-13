@@ -5,14 +5,6 @@ import by.bsuir.krestinin.entity.Newspaper;
 
 import java.util.List;
 
-public interface NewspaperDAO extends CRUD<Newspaper> {
-    void create(Newspaper newspaper) throws DAOException;
-
-    Newspaper read(int newspaperId) throws DAOException;
-
-    void update(Newspaper newspaper) throws DAOException;
-
-    void delete(int newspaperId) throws DAOException;
-
+public interface NewspaperDAO extends PublicationDAO {
     List<Newspaper> findNewspapersByPagesRange(int minPages, int maxPages) throws DAOException;
 }

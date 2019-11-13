@@ -5,7 +5,7 @@ import by.bsuir.krestinin.entity.Journal;
 
 import java.io.File;
 
-public class JournalXmlDAO extends PublicationXmlDAO<Journal> implements JournalDAO {
+public class JournalXmlDAO extends PublicationXmlDAO implements JournalDAO {
     public JournalXmlDAO(File xmlDB) {
         super(xmlDB, Journal.class);
     }

@@ -5,15 +5,7 @@ import by.bsuir.krestinin.service.exception.ServiceException;
 
 import java.util.List;
 
-public interface NewspaperService {
-    void create(Newspaper newspaper) throws ServiceException;
-
-    Newspaper read(int newspaperId) throws ServiceException;
-
-    void update(Newspaper newspaper) throws ServiceException;
-
-    void delete(int newspaperId) throws ServiceException;
-
+public interface NewspaperService extends PublicationService {
     void sortNewspapersByPages(List<Newspaper> newspapers) throws ServiceException;
 
     void sortNewspapersByTitle(List<Newspaper> newspapers) throws ServiceException;

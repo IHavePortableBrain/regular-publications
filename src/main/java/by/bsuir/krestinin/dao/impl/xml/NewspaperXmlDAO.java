@@ -6,7 +6,7 @@ import by.bsuir.krestinin.entity.Newspaper;
 import java.io.File;
 import java.util.List;
 
-public class NewspaperXmlDAO extends PublicationXmlDAO<Newspaper> implements NewspaperDAO {
+public class NewspaperXmlDAO extends PublicationXmlDAO implements NewspaperDAO {
     public NewspaperXmlDAO(File xmlDB) {
         super(xmlDB, Newspaper.class);
     }

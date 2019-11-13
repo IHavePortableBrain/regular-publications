@@ -7,25 +7,25 @@ public final class CatalogValidator extends PublicationValidator {
     private static final int MIN_PRICE = 0;
     private static final int MIN_AMOUNT_OF_ITEMS = 0;
 
-    private CatalogValidator() {
+    public CatalogValidator() {
     }
 
-    public static boolean isValidCatalog(Catalog catalog) {
-        return isValidPublication(catalog) &&
-                isValidAmountOfItems(catalog.getAmountOfItems()) &&
-                isValidPrice(catalog.getPrice()) &&
-                isValidShortDescription(catalog.getShortDescription());
-    }
-
-    public static boolean isValidAmountOfItems(int amountOfItems) {
+    private static boolean isValidAmountOfItems(int amountOfItems) {
         return amountOfItems >= MIN_AMOUNT_OF_ITEMS;
     }
 
-    public static boolean isValidPrice(double price) {
+    private static boolean isValidPrice(double price) {
         return price >= MIN_PRICE;
     }
 
-    public static boolean isValidShortDescription(String shortDescription) {
+    private static boolean isValidShortDescription(String shortDescription) {
         return shortDescription != null && !shortDescription.isEmpty();
+    }
+
+    public boolean isValid(Catalog catalog) {
+        return super.isValid(catalog) &&
+                isValidAmountOfItems(catalog.getAmountOfItems()) &&
+                isValidPrice(catalog.getPrice()) &&
+                isValidShortDescription(catalog.getShortDescription());
     }
 }

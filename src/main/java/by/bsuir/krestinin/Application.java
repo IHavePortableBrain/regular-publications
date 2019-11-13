@@ -1,5 +1,6 @@
 package by.bsuir.krestinin;
 
+import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Author;
 import by.bsuir.krestinin.entity.Calendar;
 import by.bsuir.krestinin.entity.Journal;
@@ -13,11 +14,11 @@ import by.bsuir.krestinin.service.factory.ServiceFactory;
 import java.util.ArrayList;
 
 public class Application {
-    public static void main(String[] args) throws ServiceException {
+    public static void main(String[] args) throws ServiceException, DAOException {
         demonstrateWork();
     }
 
-    private static void demonstrateWork() throws ServiceException {
+    private static void demonstrateWork() throws ServiceException, DAOException {
         CalendarService calendarService = ServiceFactory.getInstance().getCalendarService();
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
         JournalService journalService = ServiceFactory.getInstance().getJournalService();

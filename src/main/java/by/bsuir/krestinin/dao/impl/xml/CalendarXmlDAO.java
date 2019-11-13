@@ -5,7 +5,7 @@ import by.bsuir.krestinin.entity.Calendar;
 
 import java.io.File;
 
-public class CalendarXmlDAO extends PublicationXmlDAO<Calendar> implements CalendarDAO {
+public class CalendarXmlDAO extends PublicationXmlDAO implements CalendarDAO {
     public CalendarXmlDAO(File xmlDB) {
         super(xmlDB, Calendar.class);
     }
