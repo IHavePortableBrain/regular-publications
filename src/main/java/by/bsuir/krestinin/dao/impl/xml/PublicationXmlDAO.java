@@ -11,20 +11,27 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
-    private static File xmlDB;
+    private File xmlDB;
     private final Class<T> type;
     private JAXBContext jaxbContext;
 
     PublicationXmlDAO(File xmlDB, Class<T> type) {
-        PublicationXmlDAO.xmlDB = xmlDB;
+        this.xmlDB = xmlDB;
         this.type = type;
+
+        try {
+            jaxbContext = JAXBContext.newInstance(type, Publications.class);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            //handle
+        }
     }
 
+    //TODO: creation id check, new file(DB table analog) for each entity
     @Override
     public void create(T publication) throws DAOException {
         try {
             Publications<T> publications = new Publications<>();
-            jaxbContext = JAXBContext.newInstance(type, Publications.class);
 
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -44,13 +51,17 @@ class PublicationXmlDAO<T extends Publication> implements CRUD<T> {
 
     @Override
     public T read(int id) throws DAOException {
-        T result;
+        T result = null;
         try {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-            do {
-                result = (T) jaxbUnmarshaller.unmarshal(xmlDB);
-            } while (result != null && result.getId() != id);
+            Publications<T> DBcontent = (Publications<T>) jaxbUnmarshaller.unmarshal(xmlDB);
+            for (Publication publication : DBcontent.getPublications()
+            ) {
+                if (publication.getId() == id && publication.getClass() == type) {
+                    result = (T) publication;
+                    break;
+                }
+            }
         } catch (JAXBException e) {
             throw new DAOException(e);
         }

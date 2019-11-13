@@ -69,3 +69,7 @@ fabric.properties
 
 .idea
 lab1.iml
+/DB/
+DB/author.xml
+DB/calendar.xml
+DB/journal.xml

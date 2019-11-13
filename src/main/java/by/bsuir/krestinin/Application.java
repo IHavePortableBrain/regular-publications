@@ -25,7 +25,6 @@ public class Application {
         Calendar calendar = new Calendar(4, "title2",
                 java.util.Calendar.getInstance().getTime(), 2019, "desc");
 
-
         Author author = new Author();
         author.setId(3);
         ArrayList<Integer> authors = new ArrayList<>();
@@ -48,11 +47,13 @@ public class Application {
         calendarService.create(calendar);
         journalService.create(journal);
 
-        //calendar.setDescription("new desc");
-
+        calendar.setDescription("New desc");
+        calendar.setYear(2048);
+        calendar.setId(6);
+        calendarService.create(calendar);
         //calendarService.update(calendar);
 
-        System.out.println(authorService.read(author.getId()));
+        System.out.println(calendarService.read(calendar.getId()));
 
         //calendarService.delete(calendar.getId());
 

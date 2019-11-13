@@ -4,31 +4,31 @@ import by.bsuir.krestinin.dao.api.*;
 import by.bsuir.krestinin.dao.impl.xml.*;
 
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public final class DAOFactory {
 
-    private static final String XmlPath = "DB.xml";
-    private static final File XmlDbFile = new File(XmlPath);
-    private static final DAOFactory instance = new DAOFactory(); //must be after XmlDbFile
+    private static final String DB_DIR = "DB";
+    private static final DAOFactory instance = new DAOFactory();
+    private static final File authorDB = new File(DB_DIR + "\\" + "author.xml");
+    private static final File calendarDB = new File(DB_DIR + "\\" + "calendar.xml");
+    private static final File catalogDB = new File(DB_DIR + "\\" + "catalog.xml");
+    private static final File eventDB = new File(DB_DIR + "\\" + "event.xml");
+    private static final File journalDB = new File(DB_DIR + "\\" + "journal.xml");
+    private static final File newspaperDB = new File(DB_DIR + "\\" + "newspaper.xml");
 
     //TODO: change to new xxXmlDao
-    private final AuthorDAO authorDAO = new AuthorXmlDAO(XmlDbFile);
-    private final CalendarDAO calendarDAO = new CalendarXmlDAO(XmlDbFile);
-    private final CatalogDAO catalogDAO = new CatalogXmlDAO(XmlDbFile);
-    private final EventDAO eventDAO = new EventXmlDAO(XmlDbFile);
-    private final JournalDAO journalDAO = new JournalXmlDAO(XmlDbFile);
-    private final NewspaperDAO newspaperDAO = new NewspaperXmlDAO(XmlDbFile);
+    private static final AuthorDAO authorDAO = new AuthorXmlDAO(authorDB);
+    private static final CalendarDAO calendarDAO = new CalendarXmlDAO(calendarDB);
+    private static final CatalogDAO catalogDAO = new CatalogXmlDAO(catalogDB);
+    private static final EventDAO eventDAO = new EventXmlDAO(eventDB);
+    private static final JournalDAO journalDAO = new JournalXmlDAO(journalDB);
+    private static final NewspaperDAO newspaperDAO = new NewspaperXmlDAO(newspaperDB);
 
     private DAOFactory() {
-        if (!XmlDbFile.exists()) {
-            try {
-                if (!XmlDbFile.createNewFile())
-                    throw new IOException();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        if (Files.notExists(Paths.get(DB_DIR)))
+            new File(DB_DIR).mkdir();
     }
 
     public static DAOFactory getInstance() {
