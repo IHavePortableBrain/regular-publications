@@ -43,19 +43,25 @@ public class Application {
         author.setBirthPlace("Jaja");
         author.setJournals(journals);
 
+        //demonstrate create
         authorService.create(author);
         calendarService.create(calendar);
         journalService.create(journal);
 
+        //demonstrate update
         calendar.setDescription("New desc");
         calendar.setYear(2048);
-        calendar.setId(6);
+        calendar.setId(5);
         calendarService.create(calendar);
-        //calendarService.update(calendar);
+        calendar.setYear(2005);
+        calendarService.update(calendar);
 
+        //demonstrate read
         System.out.println(calendarService.read(calendar.getId()));
 
-        //calendarService.delete(calendar.getId());
+        //demonstrate delete
+        calendarService.delete(calendar.getId());
+        System.out.println(calendarService.read(calendar.getId()));
 
         //final List<Newspaper> newspapersByPagesRange = ServiceFactory.getInstance().getNewspaperService().findNewspapersByPagesRange(10, 15);
         //System.out.println(newspapersByPagesRange);
