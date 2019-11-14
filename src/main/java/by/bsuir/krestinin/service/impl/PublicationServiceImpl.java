@@ -7,6 +7,9 @@ import by.bsuir.krestinin.service.api.PublicationService;
 import by.bsuir.krestinin.service.exception.ServiceException;
 import by.bsuir.krestinin.service.validator.PublicationValidator;
 
+import java.util.Comparator;
+import java.util.List;
+
 public abstract class PublicationServiceImpl implements PublicationService {
     public abstract PublicationValidator getValidator();
 
@@ -68,5 +71,36 @@ public abstract class PublicationServiceImpl implements PublicationService {
         }
     }
 
+    public Publication[] readAll() throws ServiceException {
+        try {
+            return getDAO().readAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Publication> sortByID(List<Publication> toSort) throws ServiceException {
+        if (toSort == null)
+            throw new ServiceException("Publication[] not null expected");
+
+        try {
+            toSort.sort(Comparator.comparing(Publication::getId).thenComparing(Publication::getTitle));
+            return toSort;
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Publication> sortByPublicationDate(List<Publication> toSort) throws ServiceException {
+        if (toSort == null)
+            throw new ServiceException("Publication[] not null expected");
+
+        try {
+            toSort.sort(Comparator.comparing(Publication::getPublicationDate).thenComparing(Publication::getTitle));
+            return toSort;
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
 
 }

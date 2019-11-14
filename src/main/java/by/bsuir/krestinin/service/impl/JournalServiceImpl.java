@@ -5,7 +5,6 @@ import by.bsuir.krestinin.dao.factory.DAOFactory;
 import by.bsuir.krestinin.service.api.JournalService;
 import by.bsuir.krestinin.service.validator.JournalValidator;
 
-//TODO: rewrite services like Dao layer
 public class JournalServiceImpl extends PublicationServiceImpl
         implements JournalService {
     private static final JournalDAO journalDAO = DAOFactory.getInstance().getJournalDAO();

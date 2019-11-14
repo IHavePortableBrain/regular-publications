@@ -2,7 +2,6 @@ package by.bsuir.krestinin.service.impl;
 
 import by.bsuir.krestinin.dao.api.NewspaperDAO;
 import by.bsuir.krestinin.dao.api.PublicationDAO;
-import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.dao.factory.DAOFactory;
 import by.bsuir.krestinin.entity.Newspaper;
 import by.bsuir.krestinin.service.api.NewspaperService;
@@ -28,23 +27,6 @@ public class NewspaperServiceImpl extends PublicationServiceImpl
     @Override
     public PublicationDAO getDAO() {
         return newspaperDAO;
-    }
-
-    @Override
-    public List<Newspaper> findNewspapersByPagesRange(int minPages, int maxPages) throws ServiceException {
-        if (minPages < 0 || maxPages < minPages) {
-            throw new ServiceException(String.format("Invalid range: [%d, %d]", minPages, maxPages));
-        }
-
-        List<Newspaper> newspapersResult;
-
-        try {
-            newspapersResult = newspaperDAO.findNewspapersByPagesRange(minPages, maxPages);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-
-        return newspapersResult;
     }
 
     @Override

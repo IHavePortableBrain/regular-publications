@@ -20,9 +20,6 @@ class Publications {
     }
 
     void AddPublication(Publication toAdd) {
-//        Publication[] old = publications;
-//        publications = Arrays.copyOf(old, old.length + 1);
-//        publications[publications.length-1] = toAdd;
         publications.add(toAdd);
     }
 }

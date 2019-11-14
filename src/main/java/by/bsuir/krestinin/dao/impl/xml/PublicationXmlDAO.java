@@ -12,7 +12,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO: write API for it
 @SuppressWarnings("unchecked")
 class PublicationXmlDAO implements PublicationDAO {
     private File xmlDB;
@@ -31,7 +30,7 @@ class PublicationXmlDAO implements PublicationDAO {
         }
     }
 
-    //TODO: creation id check, new file(DB table analog) for each entity
+    //TODO: creation id check
     @Override
     public void create(Publication publication) throws DAOException {
         try {

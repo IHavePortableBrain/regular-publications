@@ -18,7 +18,6 @@ public final class DAOFactory {
     private static final File journalDB = new File(DB_DIR + "\\" + "journal.xml");
     private static final File newspaperDB = new File(DB_DIR + "\\" + "newspaper.xml");
 
-    //TODO: change to new xxXmlDao
     private static final AuthorDAO authorDAO = new AuthorXmlDAO(authorDB);
     private static final CalendarDAO calendarDAO = new CalendarXmlDAO(calendarDB);
     private static final CatalogDAO catalogDAO = new CatalogXmlDAO(catalogDB);

@@ -9,6 +9,4 @@ public interface NewspaperService extends PublicationService {
     void sortNewspapersByPages(List<Newspaper> newspapers) throws ServiceException;
 
     void sortNewspapersByTitle(List<Newspaper> newspapers) throws ServiceException;
-
-    List<Newspaper> findNewspapersByPagesRange(int minPages, int maxPages) throws ServiceException;
 }
