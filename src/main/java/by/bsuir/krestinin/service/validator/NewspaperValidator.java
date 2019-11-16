@@ -18,7 +18,7 @@ public final class NewspaperValidator extends PublicationValidator {
                 isValidPageAmount(newspaper.getPages());
     }
 
-    private boolean isValidEventsDescribed(List<Event> events) {
+    private boolean isValidEventsDescribed(List<Integer> events) {
         return events != null;
     }
 

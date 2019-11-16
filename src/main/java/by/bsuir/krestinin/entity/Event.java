@@ -1,6 +1,7 @@
 package by.bsuir.krestinin.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.StringJoiner;
 
 @Entity
 @Table(name = "event")
+@XmlRootElement(name = "event")
 public class Event extends Publication implements Serializable {
     private static final long serialVersionUID = -7608861318703624780L;
 
@@ -28,7 +30,7 @@ public class Event extends Publication implements Serializable {
 
     @ManyToMany(mappedBy = "eventsDescribed")
     @Column(name = "publishing_places")
-    private List<Newspaper> publishingPlaces;
+    private List<Integer> publishingPlaces; //List<Newspaper>
 
     public Event() {
         super();
@@ -36,7 +38,7 @@ public class Event extends Publication implements Serializable {
 
     public Event(int id, String title, Date publicationDate,
                  Date dateHappened, String description, int amountOfPeopleActed,
-                 List<Newspaper> publishingPlaces) {
+                 List<Integer> publishingPlaces) {
         super(id, title, publicationDate);
         this.dateHappened = dateHappened;
         this.description = description;
@@ -72,11 +74,11 @@ public class Event extends Publication implements Serializable {
         this.amountOfPeopleActed = amountOfPeopleActed;
     }
 
-    public List<Newspaper> getPublishingPlaces() {
+    public List<Integer> getPublishingPlaces() {
         return publishingPlaces;
     }
 
-    public void setPublishingPlaces(List<Newspaper> publishingPlaces) {
+    public void setPublishingPlaces(List<Integer> publishingPlaces) {
         this.publishingPlaces = publishingPlaces;
     }
 

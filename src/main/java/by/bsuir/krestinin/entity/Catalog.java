@@ -3,6 +3,7 @@ package by.bsuir.krestinin.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.StringJoiner;
 
 @Entity
 @Table(name = "catalog")
+@XmlRootElement(name = "catalog")
 public class Catalog extends Publication implements Serializable {
     private static final long serialVersionUID = -6931097108288203519L;
 

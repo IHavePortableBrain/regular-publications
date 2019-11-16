@@ -1,6 +1,7 @@
 package by.bsuir.krestinin.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -9,13 +10,14 @@ import java.util.StringJoiner;
 //TODO: author is not publication
 @Entity
 @Table(name = "author")
+@XmlRootElement(name = "author")
 public class Author extends Publication implements Serializable {
     private static final long serialVersionUID = 1659074767148864864L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name = "id")
+//    private int id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -38,7 +40,7 @@ public class Author extends Publication implements Serializable {
     }
 
     public Author(int id, String fullName, String birthPlace, String biography, List<Integer> journals) {
-        this.id = id;
+        super(id, fullName, java.util.Calendar.getInstance().getTime());
         this.fullName = fullName;
         this.birthPlace = birthPlace;
         this.biography = biography;
@@ -101,7 +103,7 @@ public class Author extends Publication implements Serializable {
     @Override
     public String toString() {
         return new StringJoiner(", ", Author.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
+                .add("id=" + super.getId())
                 .add("fullName='" + fullName + "'")
                 .add("birthPlace='" + birthPlace + "'")
                 .add("biography='" + biography + "'")

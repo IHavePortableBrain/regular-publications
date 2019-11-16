@@ -1,14 +1,13 @@
 package by.bsuir.krestinin.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 @Entity
 @Table(name = "newspaper")
+@XmlRootElement(name = "newspaper")
 public class Newspaper extends Publication implements Serializable {
     private static final long serialVersionUID = -8275022734967734174L;
 
@@ -18,7 +17,7 @@ public class Newspaper extends Publication implements Serializable {
             joinColumns = @JoinColumn(name = "newspaper_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     @Column(name = "events_described")
-    private List<Event> eventsDescribed;
+    private List<Integer> eventsDescribed; //List<Event>
 
     @Column(name = "pages")
     private int pages;
@@ -27,18 +26,18 @@ public class Newspaper extends Publication implements Serializable {
         super();
     }
 
-    public Newspaper(int id, String title, Date publicationDate, List<Event> eventsDescribed, int pages) {
+    public Newspaper(int id, String title, Date publicationDate, ArrayList<Integer> eventsDescribed, int pages) {
         super(id, title, publicationDate);
 
         this.eventsDescribed = eventsDescribed;
         this.pages = pages;
     }
 
-    public List<Event> getEventsDescribed() {
+    public List<Integer> getEventsDescribed() {
         return eventsDescribed;
     }
 
-    public void setEventsDescribed(List<Event> eventsDescribed) {
+    public void setEventsDescribed(List<Integer> eventsDescribed) {
         this.eventsDescribed = eventsDescribed;
     }
 
