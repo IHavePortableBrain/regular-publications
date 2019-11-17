@@ -2,7 +2,7 @@ package by.bsuir.krestinin.service.impl;
 
 import by.bsuir.krestinin.dao.api.NewspaperDAO;
 import by.bsuir.krestinin.dao.api.PublicationDAO;
-import by.bsuir.krestinin.dao.factory.DAOFactory;
+import by.bsuir.krestinin.dao.factory.XmlDAOFactory;
 import by.bsuir.krestinin.entity.Newspaper;
 import by.bsuir.krestinin.service.api.NewspaperService;
 import by.bsuir.krestinin.service.exception.ServiceException;
@@ -15,7 +15,7 @@ import java.util.List;
 public class NewspaperServiceImpl extends PublicationServiceImpl
         implements NewspaperService {
 
-    private static final NewspaperDAO newspaperDAO = DAOFactory.getInstance().getNewspaperDAO();
+    private static final NewspaperDAO newspaperDAO = XmlDAOFactory.getInstance().getNewspaperDAO();
     private static final NewspaperValidator newspaperValidator = new NewspaperValidator();
 
 

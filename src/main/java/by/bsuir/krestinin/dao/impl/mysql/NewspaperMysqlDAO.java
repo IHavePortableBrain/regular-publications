@@ -3,6 +3,8 @@ package by.bsuir.krestinin.dao.impl.mysql;
 import by.bsuir.krestinin.dao.api.NewspaperDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Newspaper;
+import by.bsuir.krestinin.entity.Publication;
+import by.bsuir.krestinin.service.validator.PublicationValidator;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -11,19 +13,10 @@ import java.util.List;
 
 import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
-@org.hibernate.annotations.NamedNativeQueries({
-        @org.hibernate.annotations.NamedNativeQuery(
-                name = "Newspaper_FoundByMinMaxPages",
-                query = "SELECT * FROM newspaper n WHERE n.pages BETWEEN :min AND :max;",
-                resultClass = Newspaper.class
-        )
-})
+
 public class NewspaperMysqlDAO implements NewspaperDAO {
-
-    private static final String NEWSPAPER_FIND_BY_PAGES_RANGE = "SELECT * FROM newspaper n WHERE n.pages BETWEEN :min AND :max";
-
     @Override
-    public void create(Newspaper newspaper) throws DAOException {
+    public void create(Publication newspaper) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
@@ -69,10 +62,12 @@ public class NewspaperMysqlDAO implements NewspaperDAO {
     }
 
     @Override
-    public void update(Newspaper newspaper) throws DAOException {
+    public void update(Publication publication) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
+            Newspaper newspaper = (Newspaper) publication;
+
             transaction = session.beginTransaction();
 
             Newspaper result = session.get(Newspaper.class, newspaper.getId());
@@ -91,34 +86,6 @@ public class NewspaperMysqlDAO implements NewspaperDAO {
 
             throw new DAOException(e);
         }
-    }
-
-    @Override
-    public List<Newspaper> findNewspapersByPagesRange(int minPages, int maxPages) throws DAOException {
-        List<Newspaper> result;
-
-        Transaction transaction = null;
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            Query<Newspaper> query = session.createNativeQuery(NEWSPAPER_FIND_BY_PAGES_RANGE, Newspaper.class);
-
-            query.setParameter("min", minPages);
-            query.setParameter("max", maxPages);
-
-            result = query.getResultList();
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-
-        return result;
     }
 
     @Override
@@ -141,5 +108,10 @@ public class NewspaperMysqlDAO implements NewspaperDAO {
 
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public Publication[] readAll() throws DAOException {
+        return new Publication[0];
     }
 }

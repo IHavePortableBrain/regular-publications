@@ -3,6 +3,7 @@ package by.bsuir.krestinin.dao.impl.mysql;
 import by.bsuir.krestinin.dao.api.CatalogDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Catalog;
+import by.bsuir.krestinin.entity.Publication;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -10,7 +11,7 @@ import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
 public class CatalogMysqlDAO implements CatalogDAO {
     @Override
-    public void create(Catalog catalog) throws DAOException {
+    public void create(Publication catalog) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
@@ -56,10 +57,12 @@ public class CatalogMysqlDAO implements CatalogDAO {
     }
 
     @Override
-    public void update(Catalog catalog) throws DAOException {
+    public void update(Publication publication) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
+            Catalog catalog = (Catalog) publication;
+
             transaction = session.beginTransaction();
 
             Catalog result = session.get(Catalog.class, catalog.getId());
@@ -101,5 +104,10 @@ public class CatalogMysqlDAO implements CatalogDAO {
 
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public Publication[] readAll() throws DAOException {
+        return new Publication[0];
     }
 }

@@ -3,26 +3,33 @@ package by.bsuir.krestinin.dao.impl.mysql;
 import by.bsuir.krestinin.dao.api.AuthorDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Author;
+import by.bsuir.krestinin.entity.Publication;
+import by.bsuir.krestinin.service.exception.ServiceException;
 
 public class AuthorMysqlDAO implements AuthorDAO {
-    @Override
-    public void create(Author author) throws DAOException {
 
+    @Override
+    public Publication[] readAll() throws DAOException {
+        return new Publication[0];
+    }
+
+    @Override
+    public void create(Publication publication) throws DAOException, ServiceException {
 
     }
 
     @Override
-    public Author read(int authorId) throws DAOException {
+    public Publication read(int id) throws DAOException, ServiceException {
         return null;
     }
 
     @Override
-    public void update(Author author) throws DAOException {
+    public void update(Publication publication) throws DAOException, ServiceException {
 
     }
 
     @Override
-    public void delete(int authorId) throws DAOException {
+    public void delete(int id) throws DAOException, ServiceException {
 
     }
 }

@@ -3,6 +3,7 @@ package by.bsuir.krestinin.dao.impl.mysql;
 import by.bsuir.krestinin.dao.api.JournalDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Journal;
+import by.bsuir.krestinin.entity.Publication;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -10,7 +11,7 @@ import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
 public class JournalMysqlDAO implements JournalDAO {
     @Override
-    public void create(Journal journal) throws DAOException {
+    public void create(Publication journal) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
@@ -56,10 +57,12 @@ public class JournalMysqlDAO implements JournalDAO {
     }
 
     @Override
-    public void update(Journal journal) throws DAOException {
+    public void update(Publication publication) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
+            Journal journal = (Journal) publication;
+
             transaction = session.beginTransaction();
 
             Journal result = session.get(Journal.class, journal.getId());
@@ -100,5 +103,10 @@ public class JournalMysqlDAO implements JournalDAO {
 
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public Publication[] readAll() throws DAOException {
+        return new Publication[0];
     }
 }

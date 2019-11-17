@@ -3,6 +3,7 @@ package by.bsuir.krestinin.dao.impl.mysql;
 import by.bsuir.krestinin.dao.api.EventDAO;
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.entity.Event;
+import by.bsuir.krestinin.entity.Publication;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -10,7 +11,7 @@ import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
 public class EventMysqlDAO implements EventDAO {
     @Override
-    public void create(Event event) throws DAOException {
+    public void create(Publication event) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
@@ -56,10 +57,12 @@ public class EventMysqlDAO implements EventDAO {
     }
 
     @Override
-    public void update(Event event) throws DAOException {
+    public void update(Publication publication) throws DAOException {
         Transaction transaction = null;
 
         try (Session session = getSessionFactory().openSession()) {
+            Event event = (Event) publication;
+
             transaction = session.beginTransaction();
 
             Event result = session.get(Event.class, event.getId());
@@ -100,5 +103,10 @@ public class EventMysqlDAO implements EventDAO {
 
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public Publication[] readAll() throws DAOException {
+        return new Publication[0];
     }
 }
