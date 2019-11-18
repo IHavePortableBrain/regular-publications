@@ -14,104 +14,17 @@ import java.util.List;
 import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
 
-public class NewspaperMysqlDAO implements NewspaperDAO {
+public class NewspaperMysqlDAO extends PublicationMysqlDAO implements NewspaperDAO {
     @Override
-    public void create(Publication newspaper) throws DAOException {
-        Transaction transaction = null;
+    Publication setEntityForUpdate(Publication entity, Publication update){
+        entity = super.setEntityForUpdate(entity, update);
+        Newspaper NewspaperEntity = (Newspaper)entity;
+        Newspaper NewspaperUpdate = (Newspaper)update;
 
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        NewspaperEntity.setEventsDescribed(NewspaperUpdate.getEventsDescribed());
+        NewspaperEntity.setPages(NewspaperUpdate.getPages());
 
-            session.save(newspaper);
 
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public Newspaper read(int newspaperId) throws DAOException {
-        Transaction transaction = null;
-
-        Newspaper result;
-
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            result = session.get(Newspaper.class, newspaperId);
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-
-        return result;
-    }
-
-    @Override
-    public void update(Publication publication) throws DAOException {
-        Transaction transaction = null;
-
-        try (Session session = getSessionFactory().openSession()) {
-            Newspaper newspaper = (Newspaper) publication;
-
-            transaction = session.beginTransaction();
-
-            Newspaper result = session.get(Newspaper.class, newspaper.getId());
-            result.setEventsDescribed(newspaper.getEventsDescribed());
-            result.setPages(newspaper.getPages());
-            result.setPublicationDate(newspaper.getPublicationDate());
-            result.setTitle(newspaper.getTitle());
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public void delete(int newspaperId) throws DAOException {
-
-        Transaction transaction = null;
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            Newspaper result = session.get(Newspaper.class, newspaperId);
-            session.delete(result);
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public Publication[] readAll() throws DAOException {
-        return new Publication[0];
+        return entity;
     }
 }

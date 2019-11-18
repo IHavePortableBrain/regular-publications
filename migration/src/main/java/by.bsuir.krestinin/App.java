@@ -2,10 +2,10 @@ package by.bsuir.krestinin;
 
 import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.dao.factory.XmlDAOFactory;
-import by.bsuir.krestinin.dao.impl.mysql.CalendarMysqlDAO;
-import by.bsuir.krestinin.dao.impl.xml.AuthorXmlDAO;
-import by.bsuir.krestinin.dao.impl.xml.CalendarXmlDAO;
+import by.bsuir.krestinin.dao.impl.mysql.*;
+import by.bsuir.krestinin.dao.impl.xml.*;
 import by.bsuir.krestinin.entity.Calendar;
+import by.bsuir.krestinin.entity.Newspaper;
 import by.bsuir.krestinin.entity.Publication;
 import org.apache.commons.io.FilenameUtils;
 
@@ -68,12 +68,30 @@ public class App{
         boolean isMigrated = true;
         Publication[] toMigrate;
 
+        PublicationMysqlDAO publicationMysqlDAO = new PublicationMysqlDAO();
+
         AuthorXmlDAO authorXmlDAO = XmlDAOFactory.getInstance().getAuthorDAO();
+        AuthorMysqlDAO authorMysqlDAO = new AuthorMysqlDAO();
         if (dbFiles.contains(new File("DB\\author.xml")))
             try {
                 toMigrate = authorXmlDAO.readAll();
-            }catch (DAOException e){
+                for (Publication publication: toMigrate)
+                    authorMysqlDAO.create(publication);
 
+            }catch (DAOException e){
+                System.out.println("DB\\author.xml didn't migrate correctly");
+            }
+
+        CatalogXmlDAO catalogXmlDAO = XmlDAOFactory.getInstance().getCatalogDAO();
+        CatalogMysqlDAO catalogMysqlDAO = new CatalogMysqlDAO();
+        if (dbFiles.contains(new File("DB\\catalog.xml")))
+            try {
+                toMigrate = catalogXmlDAO.readAll();
+                for (Publication publication: toMigrate)
+                    catalogMysqlDAO.create(publication);
+
+            }catch (DAOException e){
+                System.out.println("DB\\catalog.xml didn't migrate correctly");
             }
 
         CalendarXmlDAO calendarXmlDAO = XmlDAOFactory.getInstance().getCalendarDAO();
@@ -81,11 +99,48 @@ public class App{
         if (dbFiles.contains(new File("DB\\calendar.xml")))
             try {
                 toMigrate = calendarXmlDAO.readAll();
-                calendarMysqlDAO.create(toMigrate[0]);
-            }catch (DAOException e){
+                for (Publication publication: toMigrate)
+                    calendarMysqlDAO.create(publication);
 
+            }catch (DAOException e){
+                System.out.println("DB\\calendar.xml didn't migrate correctly");
             }
 
+        EventXmlDAO eventXmlDAO = XmlDAOFactory.getInstance().getEventDAO();
+        EventMysqlDAO eventMysqlDAO = new EventMysqlDAO();
+        if (dbFiles.contains(new File("DB\\event.xml")))
+            try {
+                toMigrate = eventXmlDAO.readAll();
+                for (Publication publication: toMigrate)
+                    eventMysqlDAO.create(publication);
+
+            }catch (DAOException e){
+                System.out.println("DB\\event.xml didn't migrate correctly");
+            }
+
+        JournalXmlDAO journalXmlDAO = XmlDAOFactory.getInstance().getJournalDAO();
+        JournalMysqlDAO journalMysqlDAO = new JournalMysqlDAO();
+        if (dbFiles.contains(new File("DB\\journal.xml")))
+            try {
+                toMigrate = journalXmlDAO.readAll();
+                for (Publication publication: toMigrate)
+                    journalMysqlDAO.create(publication);
+
+            }catch (DAOException e){
+                System.out.println("DB\\journal.xml didn't migrate correctly");
+            }
+
+        NewspaperXmlDAO newspaperXmlDAO = XmlDAOFactory.getInstance().getNewspaperDAO();
+        NewspaperMysqlDAO newspaperMysqlDAO = new NewspaperMysqlDAO();
+        if (dbFiles.contains(new File("DB\\newspaper.xml")))
+            try {
+                toMigrate = newspaperXmlDAO.readAll();
+                for (Publication publication: toMigrate)
+                    newspaperMysqlDAO.create(publication);
+
+            }catch (DAOException e){
+                System.out.println("DB\\newspaper.xml didn't migrate correctly");
+            }
 
         return isMigrated;
     }

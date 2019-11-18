@@ -9,104 +9,17 @@ import org.hibernate.Transaction;
 
 import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
-public class JournalMysqlDAO implements JournalDAO {
+public class JournalMysqlDAO  extends PublicationMysqlDAO implements JournalDAO {
     @Override
-    public void create(Publication journal) throws DAOException {
-        Transaction transaction = null;
+    Publication setEntityForUpdate(Publication entity, Publication update){
+        entity = super.setEntityForUpdate(entity, update);
 
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        Journal JournalEntity = (Journal)entity;
+        Journal JournalUpdate = (Journal)update;
 
-            session.save(journal);
+        JournalEntity.setAuthors(JournalUpdate.getAuthors());
+        JournalEntity.setJournalType(JournalUpdate.getJournalType());
 
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public Journal read(int journalId) throws DAOException {
-        Transaction transaction = null;
-
-        Journal result;
-
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            result = session.get(Journal.class, journalId);
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-
-        return result;
-    }
-
-    @Override
-    public void update(Publication publication) throws DAOException {
-        Transaction transaction = null;
-
-        try (Session session = getSessionFactory().openSession()) {
-            Journal journal = (Journal) publication;
-
-            transaction = session.beginTransaction();
-
-            Journal result = session.get(Journal.class, journal.getId());
-            result.setAuthors(journal.getAuthors());
-            result.setJournalType(journal.getJournalType());
-            result.setPublicationDate(journal.getPublicationDate());
-            result.setTitle(journal.getTitle());
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public void delete(int journalId) throws DAOException {
-
-        Transaction transaction = null;
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            Journal result = session.get(Journal.class, journalId);
-            session.delete(result);
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public Publication[] readAll() throws DAOException {
-        return new Publication[0];
+        return entity;
     }
 }

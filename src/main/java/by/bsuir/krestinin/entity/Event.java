@@ -14,11 +14,6 @@ import java.util.StringJoiner;
 public class Event extends Publication implements Serializable {
     private static final long serialVersionUID = -7608861318703624780L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
-
     @Column(name = "date_mapped")
     private Date dateHappened;
 
@@ -28,7 +23,7 @@ public class Event extends Publication implements Serializable {
     @Column(name = "amount_of_people_acted")
     private int amountOfPeopleActed;
 
-    @ManyToMany(mappedBy = "eventsDescribed")
+    @ElementCollection
     @Column(name = "publishing_places")
     private List<Integer> publishingPlaces; //List<Newspaper>
 
@@ -102,7 +97,7 @@ public class Event extends Publication implements Serializable {
     @Override
     public String toString() {
         return new StringJoiner(", ", Event.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
+                .add("id=" + super.getId())
                 .add("dateHappened=" + dateHappened)
                 .add("description='" + description + "'")
                 .add("amountOfPeopleActed=" + amountOfPeopleActed)

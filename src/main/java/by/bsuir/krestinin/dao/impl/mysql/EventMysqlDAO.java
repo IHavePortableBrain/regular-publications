@@ -9,104 +9,19 @@ import org.hibernate.Transaction;
 
 import static by.bsuir.krestinin.dao.util.HibernateUtil.getSessionFactory;
 
-public class EventMysqlDAO implements EventDAO {
+public class EventMysqlDAO extends PublicationMysqlDAO implements EventDAO {
     @Override
-    public void create(Publication event) throws DAOException {
-        Transaction transaction = null;
+    Publication setEntityForUpdate(Publication entity, Publication update){
+        entity = super.setEntityForUpdate(entity, update);
 
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        Event EventEntity = (Event)entity;
+        Event EventUpdate = (Event)update;
 
-            session.save(event);
+        EventEntity.setDescription(EventUpdate.getDescription());
+        EventEntity.setAmountOfPeopleActed(EventUpdate.getAmountOfPeopleActed());
+        EventEntity.setDateHappened(EventUpdate.getDateHappened());
+        EventEntity.setPublishingPlaces(EventUpdate.getPublishingPlaces());
 
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public Event read(int eventId) throws DAOException {
-        Transaction transaction = null;
-
-        Event result;
-
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            result = session.get(Event.class, eventId);
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-
-        return result;
-    }
-
-    @Override
-    public void update(Publication publication) throws DAOException {
-        Transaction transaction = null;
-
-        try (Session session = getSessionFactory().openSession()) {
-            Event event = (Event) publication;
-
-            transaction = session.beginTransaction();
-
-            Event result = session.get(Event.class, event.getId());
-            result.setAmountOfPeopleActed(event.getAmountOfPeopleActed());
-            result.setDateHappened(event.getDateHappened());
-            result.setDescription(event.getDescription());
-            result.setPublishingPlaces(event.getPublishingPlaces());
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public void delete(int eventId) throws DAOException {
-
-        Transaction transaction = null;
-        try (Session session = getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            Event result = session.get(Event.class, eventId);
-            session.delete(result);
-
-            transaction.commit();
-
-            session.close();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public Publication[] readAll() throws DAOException {
-        return new Publication[0];
+        return entity;
     }
 }

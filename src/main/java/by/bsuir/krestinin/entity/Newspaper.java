@@ -1,6 +1,8 @@
 package by.bsuir.krestinin.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.*;
@@ -11,11 +13,7 @@ import java.util.*;
 public class Newspaper extends Publication implements Serializable {
     private static final long serialVersionUID = -8275022734967734174L;
 
-    @ManyToMany
-    @JoinTable(
-            name = "newspapers_events",
-            joinColumns = @JoinColumn(name = "newspaper_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    @ElementCollection
     @Column(name = "events_described")
     private List<Integer> eventsDescribed; //List<Event>
 

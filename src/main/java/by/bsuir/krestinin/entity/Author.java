@@ -28,11 +28,7 @@ public class Author extends Publication implements Serializable {
     @Column(name = "biography")
     private String biography;
 
-    @ManyToMany
-    @JoinTable(
-            name = "authors_journals",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "journal_id"))
+    @ElementCollection
     @Column(name = "journals")
     private List<Integer> journals;//List<Journal>
 

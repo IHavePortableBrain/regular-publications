@@ -14,7 +14,7 @@ import java.util.StringJoiner;
 public class Journal extends Publication implements Serializable {
     private static final long serialVersionUID = 7618934103472850762L;
 
-    @ManyToMany(mappedBy = "journals")
+    @ElementCollection
     @Column(name = "authors")
     private List<Integer> authors;//List<Author>
 

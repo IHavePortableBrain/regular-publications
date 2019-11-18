@@ -6,30 +6,19 @@ import by.bsuir.krestinin.entity.Author;
 import by.bsuir.krestinin.entity.Publication;
 import by.bsuir.krestinin.service.exception.ServiceException;
 
-public class AuthorMysqlDAO implements AuthorDAO {
-
+public class AuthorMysqlDAO extends PublicationMysqlDAO implements AuthorDAO {
     @Override
-    public Publication[] readAll() throws DAOException {
-        return new Publication[0];
-    }
+    Publication setEntityForUpdate(Publication entity, Publication update){
+        entity = super.setEntityForUpdate(entity, update);
 
-    @Override
-    public void create(Publication publication) throws DAOException, ServiceException {
+        Author AuthorEntity = (Author)entity;
+        Author AuthorUpdate = (Author)update;
 
-    }
+        AuthorEntity.setBirthPlace(AuthorUpdate.getBirthPlace());
+        AuthorEntity.setFullName(AuthorUpdate.getFullName());
+        AuthorEntity.setBiography(AuthorUpdate.getBiography());
+        AuthorEntity.setJournals(AuthorUpdate.getJournals());
 
-    @Override
-    public Publication read(int id) throws DAOException, ServiceException {
-        return null;
-    }
-
-    @Override
-    public void update(Publication publication) throws DAOException, ServiceException {
-
-    }
-
-    @Override
-    public void delete(int id) throws DAOException, ServiceException {
-
+        return entity;
     }
 }
