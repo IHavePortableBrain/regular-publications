@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Application {
+class Application {
     public static void main(String[] args) throws ServiceException, DAOException {
         demonstrateWork();
     }

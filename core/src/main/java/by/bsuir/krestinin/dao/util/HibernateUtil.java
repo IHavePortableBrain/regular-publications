@@ -1,6 +1,5 @@
 package by.bsuir.krestinin.dao.util;
 
-import by.bsuir.krestinin.Application;
 import by.bsuir.krestinin.entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -56,9 +55,7 @@ public final class HibernateUtil {
     private static Properties loadProperties(String fileName) throws IOException {
         Properties props = new Properties();
 
-        ClassLoader classLoader = Application.class.getClassLoader();
-
-        try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)) {
             if (inputStream != null) {
                 props.load(inputStream);
             }

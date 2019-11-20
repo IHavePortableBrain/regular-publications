@@ -11,8 +11,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="core" target="8" />
-      <module name="migration" target="1.5" />
+      <module name="core" target="11" />
+      <module name="migration" target="11" />
       <module name="regular-publications" target="1.5" />
     </bytecodeTargetLevel>
   </component>
