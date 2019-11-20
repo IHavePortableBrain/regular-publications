@@ -6,6 +6,7 @@ import by.bsuir.krestinin.dao.impl.mysql.*;
 import by.bsuir.krestinin.dao.impl.xml.*;
 import by.bsuir.krestinin.entity.Publication;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -18,7 +19,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
+
 public class App {
+    private static final Logger log = Logger.getLogger(App.class);
+
     // move migration jar to ../DB
     public static void main(String[] Args) {
         ArrayList<File> validXMLs = new ArrayList<>();
@@ -37,7 +41,7 @@ public class App {
             String output = xmlfile + (isValid ? " is valid" : " is invalid");
             if (isValid)
                 validXMLs.add(xmlfile);
-            System.out.println(output);
+            log.info(output);
         }
 
         migrateToMySql(validXMLs);
@@ -51,7 +55,7 @@ public class App {
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new File(xmlPath)));
         } catch (IOException | org.xml.sax.SAXException e) {
-            System.out.println("Exception: " + e.getMessage());
+            log.error("Exception: " + e.getMessage());
             return false;
         }
         return true;
@@ -68,9 +72,9 @@ public class App {
                 toMigrate = authorXmlDAO.readAll();
                 for (Publication publication : toMigrate)
                     authorMysqlDAO.create(publication);
-
+                log.info("DB\\author.xml migrated");
             } catch (DAOException e) {
-                System.out.println("DB\\author.xml didn't migrate correctly");
+                log.error("DB\\author.xml didn't migrate correctly");
             }
 
         CatalogXmlDAO catalogXmlDAO = XmlDAOFactory.getInstance().getCatalogDAO();
@@ -80,9 +84,9 @@ public class App {
                 toMigrate = catalogXmlDAO.readAll();
                 for (Publication publication : toMigrate)
                     catalogMysqlDAO.create(publication);
-
+                log.info("DB\\catalog.xml migrated");
             } catch (DAOException e) {
-                System.out.println("DB\\catalog.xml didn't migrate correctly");
+                log.error("DB\\catalog.xml didn't migrate correctly");
             }
 
         CalendarXmlDAO calendarXmlDAO = XmlDAOFactory.getInstance().getCalendarDAO();
@@ -92,9 +96,9 @@ public class App {
                 toMigrate = calendarXmlDAO.readAll();
                 for (Publication publication : toMigrate)
                     calendarMysqlDAO.create(publication);
-
+                log.info("DB\\calendar.xml migrated");
             } catch (DAOException e) {
-                System.out.println("DB\\calendar.xml didn't migrate correctly");
+                log.error("DB\\calendar.xml didn't migrate correctly");
             }
 
         EventXmlDAO eventXmlDAO = XmlDAOFactory.getInstance().getEventDAO();
@@ -104,9 +108,9 @@ public class App {
                 toMigrate = eventXmlDAO.readAll();
                 for (Publication publication : toMigrate)
                     eventMysqlDAO.create(publication);
-
+                log.info("DB\\event.xml migrated");
             } catch (DAOException e) {
-                System.out.println("DB\\event.xml didn't migrate correctly");
+                log.error("DB\\event.xml didn't migrate correctly");
             }
 
         JournalXmlDAO journalXmlDAO = XmlDAOFactory.getInstance().getJournalDAO();
@@ -116,9 +120,9 @@ public class App {
                 toMigrate = journalXmlDAO.readAll();
                 for (Publication publication : toMigrate)
                     journalMysqlDAO.create(publication);
-
+                log.info("DB\\journal.xml migrated");
             } catch (DAOException e) {
-                System.out.println("DB\\journal.xml didn't migrate correctly");
+                log.error("DB\\journal.xml didn't migrate correctly");
             }
 
         NewspaperXmlDAO newspaperXmlDAO = XmlDAOFactory.getInstance().getNewspaperDAO();
@@ -128,9 +132,9 @@ public class App {
                 toMigrate = newspaperXmlDAO.readAll();
                 for (Publication publication : toMigrate)
                     newspaperMysqlDAO.create(publication);
-
+                log.info("DB\\newspaper.xml migrated");
             } catch (DAOException e) {
-                System.out.println("DB\\newspaper.xml didn't migrate correctly");
+                log.error("DB\\newspaper.xml didn't migrate correctly");
             }
 
         return isMigrated;

@@ -36,7 +36,7 @@ class Application {
                 authors, JournalType.EVERY_WEEK);
 
         Journal journal2 = new Journal(6, "j", java.util.Calendar.getInstance().getTime(),
-                authors, JournalType.EVERYDAY);
+                authors, JournalType.EVERY_DAY);
 
         ArrayList<Integer> journals = new ArrayList<>();
         journals.add(journal1.getId());

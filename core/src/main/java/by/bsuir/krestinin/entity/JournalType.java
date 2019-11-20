@@ -1,5 +1,5 @@
 package by.bsuir.krestinin.entity;
 
 public enum JournalType {
-    EVERYDAY, EVERY_WEEK, EVERY_MONTh
+    EVERY_DAY, EVERY_WEEK, EVERY_MONTH
 }
