@@ -20,14 +20,10 @@ import java.util.Arrays;
 
 public class App {
     // move migration jar to ../DB
-    public static void main(String[] Args) { //TODO: change to args
-        String[] args = {"DB"}; //for debug
+    public static void main(String[] Args) {
         ArrayList<File> validXMLs = new ArrayList<>();
-        System.out.println(Arrays.toString(args));
-        System.out.println("Working Directory = " +
-                System.getProperty("user.dir"));
 
-        File dir = new File(args[0]);
+        File dir = new File("DB");
         if (!dir.exists() || !dir.isDirectory())
             return;
 
@@ -45,7 +41,6 @@ public class App {
         }
 
         migrateToMySql(validXMLs);
-        //TODO: validate each bd file, migrate to mySql
     }
 
     private static boolean validateXMLSchema(String xsdPath, String xmlPath) {
@@ -65,8 +60,6 @@ public class App {
     private static boolean migrateToMySql(ArrayList<File> dbFiles) {
         boolean isMigrated = true;
         Publication[] toMigrate;
-
-        PublicationMysqlDAO publicationMysqlDAO = new PublicationMysqlDAO();
 
         AuthorXmlDAO authorXmlDAO = XmlDAOFactory.getInstance().getAuthorDAO();
         AuthorMysqlDAO authorMysqlDAO = new AuthorMysqlDAO();
