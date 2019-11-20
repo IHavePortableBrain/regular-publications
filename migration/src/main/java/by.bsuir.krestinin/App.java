@@ -4,8 +4,6 @@ import by.bsuir.krestinin.dao.exception.DAOException;
 import by.bsuir.krestinin.dao.factory.XmlDAOFactory;
 import by.bsuir.krestinin.dao.impl.mysql.*;
 import by.bsuir.krestinin.dao.impl.xml.*;
-import by.bsuir.krestinin.entity.Calendar;
-import by.bsuir.krestinin.entity.Newspaper;
 import by.bsuir.krestinin.entity.Publication;
 import org.apache.commons.io.FilenameUtils;
 
@@ -20,10 +18,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class App{
+public class App {
     // move migration jar to ../DB
-    public static void main(String[] Args){ //TODO: change to args
-        String[] args = { "DB" }; //for debug
+    public static void main(String[] Args) { //TODO: change to args
+        String[] args = {"DB"}; //for debug
         ArrayList<File> validXMLs = new ArrayList<>();
         System.out.println(Arrays.toString(args));
         System.out.println("Working Directory = " +
@@ -33,14 +31,14 @@ public class App{
         if (!dir.exists() || !dir.isDirectory())
             return;
 
-        File [] files = dir.listFiles((dir1, name) -> name.endsWith(".xml"));
+        File[] files = dir.listFiles((dir1, name) -> name.endsWith(".xml"));
         if (files == null)
             return;
 
         for (File xmlfile : files) {
             String xsdPath = dir.getPath() + "\\xsd\\" + FilenameUtils.removeExtension(xmlfile.getName()) + ".xsd";
             boolean isValid = validateXMLSchema(xsdPath, xmlfile.getPath());
-            String output = xmlfile + (isValid? " is valid": " is invalid");
+            String output = xmlfile + (isValid ? " is valid" : " is invalid");
             if (isValid)
                 validXMLs.add(xmlfile);
             System.out.println(output);
@@ -50,7 +48,7 @@ public class App{
         //TODO: validate each bd file, migrate to mySql
     }
 
-    private static boolean validateXMLSchema(String xsdPath, String xmlPath){
+    private static boolean validateXMLSchema(String xsdPath, String xmlPath) {
         try {
             SchemaFactory factory =
                     SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -58,13 +56,13 @@ public class App{
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new File(xmlPath)));
         } catch (IOException | org.xml.sax.SAXException e) {
-            System.out.println("Exception: "+e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
             return false;
         }
         return true;
     }
 
-    private static boolean migrateToMySql(ArrayList<File> dbFiles){
+    private static boolean migrateToMySql(ArrayList<File> dbFiles) {
         boolean isMigrated = true;
         Publication[] toMigrate;
 
@@ -75,10 +73,10 @@ public class App{
         if (dbFiles.contains(new File("DB\\author.xml")))
             try {
                 toMigrate = authorXmlDAO.readAll();
-                for (Publication publication: toMigrate)
+                for (Publication publication : toMigrate)
                     authorMysqlDAO.create(publication);
 
-            }catch (DAOException e){
+            } catch (DAOException e) {
                 System.out.println("DB\\author.xml didn't migrate correctly");
             }
 
@@ -87,10 +85,10 @@ public class App{
         if (dbFiles.contains(new File("DB\\catalog.xml")))
             try {
                 toMigrate = catalogXmlDAO.readAll();
-                for (Publication publication: toMigrate)
+                for (Publication publication : toMigrate)
                     catalogMysqlDAO.create(publication);
 
-            }catch (DAOException e){
+            } catch (DAOException e) {
                 System.out.println("DB\\catalog.xml didn't migrate correctly");
             }
 
@@ -99,10 +97,10 @@ public class App{
         if (dbFiles.contains(new File("DB\\calendar.xml")))
             try {
                 toMigrate = calendarXmlDAO.readAll();
-                for (Publication publication: toMigrate)
+                for (Publication publication : toMigrate)
                     calendarMysqlDAO.create(publication);
 
-            }catch (DAOException e){
+            } catch (DAOException e) {
                 System.out.println("DB\\calendar.xml didn't migrate correctly");
             }
 
@@ -111,10 +109,10 @@ public class App{
         if (dbFiles.contains(new File("DB\\event.xml")))
             try {
                 toMigrate = eventXmlDAO.readAll();
-                for (Publication publication: toMigrate)
+                for (Publication publication : toMigrate)
                     eventMysqlDAO.create(publication);
 
-            }catch (DAOException e){
+            } catch (DAOException e) {
                 System.out.println("DB\\event.xml didn't migrate correctly");
             }
 
@@ -123,10 +121,10 @@ public class App{
         if (dbFiles.contains(new File("DB\\journal.xml")))
             try {
                 toMigrate = journalXmlDAO.readAll();
-                for (Publication publication: toMigrate)
+                for (Publication publication : toMigrate)
                     journalMysqlDAO.create(publication);
 
-            }catch (DAOException e){
+            } catch (DAOException e) {
                 System.out.println("DB\\journal.xml didn't migrate correctly");
             }
 
@@ -135,10 +133,10 @@ public class App{
         if (dbFiles.contains(new File("DB\\newspaper.xml")))
             try {
                 toMigrate = newspaperXmlDAO.readAll();
-                for (Publication publication: toMigrate)
+                for (Publication publication : toMigrate)
                     newspaperMysqlDAO.create(publication);
 
-            }catch (DAOException e){
+            } catch (DAOException e) {
                 System.out.println("DB\\newspaper.xml didn't migrate correctly");
             }
 
