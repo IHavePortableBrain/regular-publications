@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @SuppressWarnings("unchecked")
-class PublicationXmlDAO implements PublicationDAO {
+public class PublicationXmlDAO implements PublicationDAO {
     private File xmlDB;
     private final Class type;
     private JAXBContext jaxbContext;
@@ -73,6 +73,19 @@ class PublicationXmlDAO implements PublicationDAO {
     }
 
     public Publication[] readAll() throws DAOException {
+        Publication[] result = (Publication[]) java.lang.reflect.Array.newInstance(type, 0);
+        try {
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            Publications DBcontent = (Publications) jaxbUnmarshaller.unmarshal(xmlDB);
+            result = DBcontent.getPublications().toArray(result);
+        } catch (JAXBException e) {
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    public Publication[] readAll(File xmlDB) throws DAOException {
         Publication[] result = (Publication[]) java.lang.reflect.Array.newInstance(type, 0);
         try {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
