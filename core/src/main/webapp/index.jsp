@@ -29,21 +29,27 @@
         </form>
 
         <c:if test="${publications != null}">
-            <table border="1">
-                <tr>
-                    <c:forEach var="field" items="${fieldsWithGetter}">
-                        <th>${field.getName()}</th>
-                    </c:forEach>
-                </tr>
 
-                <c:forEach var="publ" items="${publications}">
+            <table class="table table-hover table-sm table-bordered">
+                <thead class="table-primary">
                     <tr>
                         <c:forEach var="field" items="${fieldsWithGetter}">
-                             <th>${getMethodByFieldName.get(field.getName()).invoke(publ).toString()}</th>
+                            <th>${field.getName()}</th>
                         </c:forEach>
                     </tr>
-                </c:forEach>
+                </thead>
+
+                <tbody>
+                    <c:forEach var="publ" items="${publications}">
+                        <tr>
+                            <c:forEach var="field" items="${fieldsWithGetter}">
+                                 <th>${getMethodByFieldName.get(field.getName()).invoke(publ).toString()}</th>
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
+
         </c:if>
 
 <%@include file="include/footer.jsp" %>

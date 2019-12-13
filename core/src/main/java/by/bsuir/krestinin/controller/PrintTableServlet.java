@@ -89,7 +89,8 @@ public class PrintTableServlet extends HttpServlet {
                     try {
                         Method getter = aClass.getMethod("get" + StringUtils.capitalize(field.getName()));
 
-                        if (Modifier.isPublic(getter.getModifiers())) {
+                        if (!Modifier.isFinal(field.getModifiers()) &&
+                                Modifier.isPublic(getter.getModifiers())) {
                             getMethodByFieldName.put(field.getName(), getter);
                             return true;
                         }
@@ -122,9 +123,11 @@ public class PrintTableServlet extends HttpServlet {
             } catch (FileUploadException e) {
                 //TODO: log4
                 log(e.getMessage());
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
             } catch (Exception e) {
                 //TODO: log4
                 log(e.getMessage());
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
 
         }
