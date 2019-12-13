@@ -119,13 +119,10 @@ public class PrintTableServlet extends HttpServlet {
 
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
 
-            } catch (FileUploadException e) {
-                //TODO: log4
-                log(e.getMessage());
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
             } catch (Exception e) {
                 //TODO: log4
                 log(e.getMessage());
+                request.setAttribute("error", e);
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
 

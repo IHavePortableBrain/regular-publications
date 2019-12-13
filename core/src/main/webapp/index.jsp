@@ -52,4 +52,10 @@
 
         </c:if>
 
+        <c:if test="${error != null}">
+            <div class="alert alert-danger" role="alert">
+               Check input! Error message: ${error.getMessage()}
+            </div>
+        </c:if>
+
 <%@include file="include/footer.jsp" %>
