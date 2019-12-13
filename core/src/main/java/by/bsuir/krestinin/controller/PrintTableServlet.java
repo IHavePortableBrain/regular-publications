@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import by.bsuir.krestinin.dao.api.PublicationDAO;
 import by.bsuir.krestinin.dao.impl.xml.*;
 import by.bsuir.krestinin.entity.Publication;
+import by.bsuir.krestinin.service.validator.PublicationValidator;
 import javafx.util.Pair;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -84,35 +85,33 @@ public class PrintTableServlet extends HttpServlet {
                 Publication[] publications = dao.readAll();
                 Map<String, Method> getMethodByFieldName = new HashMap<>();
 
-                Class<? extends Publication> aClass = publications[0].getClass();
-                List<Field> fieldsWithGetter = Arrays.stream(aClass.getDeclaredFields()).filter(field -> {
-                    try {
-                        Method getter = aClass.getMethod("get" + StringUtils.capitalize(field.getName()));
 
-                        if (!Modifier.isFinal(field.getModifiers()) &&
-                                Modifier.isPublic(getter.getModifiers())) {
-                            getMethodByFieldName.put(field.getName(), getter);
-                            return true;
-                        }
-                    } catch (NoSuchMethodException e) {
-                        return false;
-                    }
-                    return false;
-                }).collect(Collectors.toList());
+                List<Class<? extends Publication>> classesToScan = new ArrayList<>();
+                List<Field> fieldsWithGetter = new ArrayList<>();
 
-                for (Publication publ:
-                     publications) {
-                    for (Field field:
-                         fieldsWithGetter) {
-                        Method method = publ.getClass()
-                                .getMethod("get".concat(StringUtils.capitalize(field.getName())));
-                        String s = method
-                                .invoke(publications[0])
-                                .toString();
-                        int d = 5 + 5;
-                    }
+                classesToScan.add(publications[0].getClass());
+                Publication publ = new Publication();
+                classesToScan.add(publ.getClass());
+
+                for (Class<? extends Publication> aClass:
+                        classesToScan) {
+                    fieldsWithGetter.addAll(
+                            Arrays.stream(aClass.getDeclaredFields()).filter(field -> {
+                            try {
+                                Method getter = aClass.getMethod("get" + StringUtils.capitalize(field.getName()));
+
+                                if (!Modifier.isFinal(field.getModifiers()) &&
+                                        Modifier.isPublic(getter.getModifiers())) {
+                                    getMethodByFieldName.put(field.getName(), getter);
+                                    return true;
+                                }
+                            } catch (NoSuchMethodException e) {
+                                return false;
+                            }
+                            return false;
+                        }).collect(Collectors.toList())
+                    );
                 }
-
 
                 request.setAttribute("publications", publications);
                 request.setAttribute("fieldsWithGetter", fieldsWithGetter);
