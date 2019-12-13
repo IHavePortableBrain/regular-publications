@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "PrintTableServlet", urlPatterns = "/table")
 public class PrintTableServlet extends HttpServlet {
@@ -29,10 +30,14 @@ public class PrintTableServlet extends HttpServlet {
     private static final int maxFileSize = 5000 * 1024;
     private static final int maxMemSize = 5000 * 1024;
 
+    private static final Logger log = Logger.getLogger(PrintTableServlet.class);
+
     @Override
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("Request URL " + request.getRequestURL());
 
         String contentType = request.getContentType();
 
@@ -90,8 +95,7 @@ public class PrintTableServlet extends HttpServlet {
                 List<Field> fieldsWithGetter = new ArrayList<>();
 
                 classesToScan.add(publications[0].getClass());
-                Publication publ = new Publication();
-                classesToScan.add(publ.getClass());
+                classesToScan.add(Publication.class);
 
                 for (Class<? extends Publication> aClass:
                         classesToScan) {
@@ -120,8 +124,7 @@ public class PrintTableServlet extends HttpServlet {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
 
             } catch (Exception e) {
-                //TODO: log4
-                log(e.getMessage());
+                log.error("Exception: " + e.getMessage());
                 request.setAttribute("error", e);
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
